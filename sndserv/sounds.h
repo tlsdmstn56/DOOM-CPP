@@ -234,8 +234,8 @@ typedef enum
     NUMSFX
 } sfxenum_t;
 
-extern musicinfo_t S_music[];
-extern sfxinfo_t   S_sfx[];
+extern MusicInfo S_music[];
+extern SFXInfo   S_sfx[];
 
 #endif
 

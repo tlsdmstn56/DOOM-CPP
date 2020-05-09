@@ -40,7 +40,7 @@
 #define SPEED			11025
 
 
-void I_InitMusic(void);
+void I_InitMusic();
 
 void
 I_InitSound
@@ -52,7 +52,7 @@ I_SubmitOutputBuffer
 ( void*		samples,
   int		samplecount );
 
-void I_ShutdownSound(void);
-void I_ShutdownMusic(void);
+void I_ShutdownSound();
+void I_ShutdownMusic();
 
 #endif
