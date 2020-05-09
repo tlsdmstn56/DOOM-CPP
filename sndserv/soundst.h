@@ -68,10 +68,10 @@
 //
 // MusicInfo struct.
 //
-typedef struct
+struct MusicInfo
 {
     // up to 6-character name
-    char*	name;
+    const char*	name;
 
     // lump number of music
     int		lumpnum;
@@ -81,20 +81,16 @@ typedef struct
 
     // music handle once registered
     int handle;
-    
-} musicinfo_t;
-
-
+};
 
 //
 // SoundFX struct.
 //
-typedef struct sfxinfo_struct	sfxinfo_t;
 
-struct sfxinfo_struct
+struct SFXInfo
 {
     // up to 6-character name
-    char*	name;
+    const char*	name;
 
     // Sfx singularity (only one at a time)
     int		singularity;
@@ -103,7 +99,7 @@ struct sfxinfo_struct
     int		priority;
 
     // referenced sound if a link
-    sfxinfo_t*	link;
+    SFXInfo*	link;
 
     // pitch if a link
     int		pitch;
@@ -125,10 +121,10 @@ struct sfxinfo_struct
 
 
 
-typedef struct
+struct Channel
 {
     // sound information (if null, channel avail.)
-    sfxinfo_t*	sfxinfo;
+    SFXInfo*	sfxinfo;
 
     // origin of sound
     void*	origin;
@@ -136,18 +132,18 @@ typedef struct
     // handle of the sound being played
     int		handle;
     
-} channel_t;
+} ;
 
 
 
-enum
+enum class SoundType
 {
     Music,
     Sfx,
     SfxLink
 };
 
-enum
+enum class SoundCard
 {
     PC=1,
     Adlib=2,
@@ -155,7 +151,7 @@ enum
     Midi=8
 }; // cards available
 
-enum
+enum class SFXStatus
 {
     sfxThrowOut=-1,
     sfxNotUsed=0
@@ -165,7 +161,7 @@ enum
 //
 // Initialize the sound code at start of level
 //
-void S_Start(void);
+void S_Start();
 
 //
 // Start sound for thing at <origin>
@@ -201,10 +197,10 @@ S_ChangeMusic
 
 
 // Stops the music
-extern void S_StopMusic(void);
+extern void S_StopMusic();
 
-void S_PauseSound(void);
-void S_ResumeSound(void);
+void S_PauseSound();
+void S_ResumeSound();
 
 
 //
@@ -271,7 +267,7 @@ int I_QrySongPlaying(int handle);
 //
 void I_SetChannels(int channels);
 
-int I_GetSfxLumpNum (sfxinfo_t*);
+int I_GetSfxLumpNum (SFXInfo*);
 
 
 // Starts a sound in a particular sound channel.
@@ -304,9 +300,9 @@ int I_SoundIsPlaying(int handle);
 
 
 // the complete set of sound effects
-extern sfxinfo_t	S_sfx[];
+extern SFXInfo	S_sfx[];
 
 // the complete set of music
-extern musicinfo_t	S_music[];
+extern MusicInfo	S_music[];
 
 #endif

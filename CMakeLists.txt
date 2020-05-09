@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.0.0)
+project (doom-cpp)
+set(SPDLOG_INCLUDE_DIR external/spdlog/include)
+add_subdirectory(doom)
+# add_subdirectory(sersrc)
+add_subdirectory(sndserv)
+# add_subdirectory(ipx)
