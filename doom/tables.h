@@ -45,7 +45,7 @@
 #endif
 
 
-#include "m_fixed.h"
+#include "fixed_point.h"
  
 #define FINEANGLES  8192
 #define FINEMASK  (FINEANGLES-1)

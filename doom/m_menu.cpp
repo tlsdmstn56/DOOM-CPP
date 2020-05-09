@@ -32,6 +32,7 @@ rcsid[] = "$Id: m_menu.c,v 1.7 1997/02/03 22:45:10 b1 Exp $";
 #include <stdlib.h>
 #include <ctype.h>
 
+#include "auto_map.h"
 
 #include "doomdef.h"
 #include "dstrings.h"
@@ -79,7 +80,7 @@ int			mouseSensitivity;       // has default
 int			showMessages;
 	
 
-// Blocky mode, has default, 0 = high, 1 = normal
+// Blocky mode, has default, 0 = high, 1 = VLDoorType::normal
 int			detailLevel;		
 int			screenblocks;		// has default
 
@@ -1520,14 +1521,14 @@ bool M_Responder (event_t* ev)
 	switch(ch)
 	{
 	  case KEY_MINUS:         // Screen size down
-	    if (automapactive || chat_on)
+	    if (AutoMap::get().isAutoMapActive() || chat_on)
 		return false;
 	    M_SizeDisplay(0);
 	    S_StartSound(NULL,sfx_stnmov);
 	    return true;
 				
 	  case KEY_EQUALS:        // Screen size up
-	    if (automapactive || chat_on)
+	    if (AutoMap::get().isAutoMapActive() || chat_on)
 		return false;
 	    M_SizeDisplay(1);
 	    S_StartSound(NULL,sfx_stnmov);

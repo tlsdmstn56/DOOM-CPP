@@ -27,6 +27,8 @@ rcsid[] = "$Id: f_finale.c,v 1.5 1997/02/03 21:26:34 b1 Exp $";
 
 #include <ctype.h>
 
+#include "auto_map.h"
+
 // Functions.
 #include "i_system.h"
 #include "m_swap.h"
@@ -98,7 +100,7 @@ void F_StartFinale ()
     gameaction = ga_nothing;
     gamestate = GameState::FINALE;
     viewactive = false;
-    automapactive = false;
+    AutoMap::get().setAutoMapActive(false);
 
     // Okay - IWAD dependend stuff.
     // This has been changed severly, and

@@ -25,6 +25,7 @@ rcsid[] = "$Id: hu_lib.c,v 1.3 1997/01/26 07:44:58 b1 Exp $";
 
 #include <ctype.h>
 
+#include "auto_map.h"
 #include "doomdef.h"
 
 #include "v_video.h"
@@ -36,8 +37,6 @@ rcsid[] = "$Id: hu_lib.c,v 1.3 1997/01/26 07:44:58 b1 Exp $";
 
 // bool : whether the screen is always erased
 #define noterased viewwindowx
-
-extern bool	automapactive;	// in AM_map.c
 
 void HUlib_init()
 {
@@ -151,7 +150,7 @@ void HUlib_eraseTextLine(hu_textline_t* l)
     // and the text must either need updating or refreshing
     // (because of a recent change back from the automap)
 
-    if (!automapactive &&
+    if (!AutoMap::get().isAutoMapActive() &&
 	viewwindowx && l->needsupdate)
     {
 	lh = SHORT(l->f[0]->height) + 1;
@@ -168,7 +167,7 @@ void HUlib_eraseTextLine(hu_textline_t* l)
 	}
     }
 
-    lastautomapactive = automapactive;
+    lastautomapactive = AutoMap::get().isAutoMapActive();
     if (l->needsupdate) l->needsupdate--;
 
 }

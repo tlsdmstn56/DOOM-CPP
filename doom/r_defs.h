@@ -29,7 +29,7 @@
 
 // Some more or less basic data types
 // we depend on.
-#include "m_fixed.h"
+#include "fixed_point.h"
 
 // We rely on the thinker data struct
 // to handle sound origins in sectors.

@@ -42,13 +42,6 @@ rcsid[] = "$Id: st_lib.c,v 1.4 1997/02/03 16:47:56 b1 Exp $";
 #include "st_lib.h"
 #include "r_local.h"
 
-
-// in AM_map.c
-extern bool  automapactive; 
-
-
-
-
 //
 // Hack display negative frags.
 //  Loads and store the stminus lump.

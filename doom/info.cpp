@@ -28,7 +28,7 @@ static const char
 
 // Data.
 #include "sounds.h"
-#include "m_fixed.h"
+#include "fixed_point.h"
 
 #include "info.h"
 

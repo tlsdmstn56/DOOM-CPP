@@ -39,6 +39,8 @@ rcsid[] = "$Id: hu_stuff.c,v 1.4 1997/02/03 16:47:52 b1 Exp $";
 
 #include "doomstat.h"
 
+#include "auto_map.h"
+
 // Data.
 #include "dstrings.h"
 #include "sounds.h"
@@ -103,7 +105,6 @@ static hu_stext_t w_message;
 static int  message_counter;
 
 extern int  showMessages;
-extern bool  automapactive;
 
 static bool  headsupactive = false;
 
@@ -488,7 +489,7 @@ void HU_Drawer()
 
     HUlib_drawSText(&w_message);
     HUlib_drawIText(&w_chat);
-    if (automapactive)
+    if (AutoMap::get().isAutoMapActive())
  HUlib_drawTextLine(&w_title, false);
 
 }

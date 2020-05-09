@@ -47,7 +47,7 @@ rcsid[] = "$Id: g_game.c,v 1.8 1997/02/03 22:45:09 b1 Exp $";
 #include "wi_stuff.h"
 #include "hu_stuff.h"
 #include "st_stuff.h"
-#include "am_map.h"
+#include "auto_map.h"
 
 // Needs access to LFB.
 #include "v_video.h"
@@ -545,7 +545,7 @@ bool G_Responder (event_t* ev)
      return true; // chat ate the event 
  if (ST_Responder (ev)) 
      return true; // status window ate it 
- if (AM_Responder (ev)) 
+ if ( AutoMap::get().Responder (ev)) 
      return true; // automap ate it 
     } 
   
@@ -729,7 +729,7 @@ void G_Ticker ()
       case GameState::LEVEL: 
  P_Ticker (); 
  ST_Ticker (); 
- AM_Ticker (); 
+  AutoMap::get().Ticker (); 
  HU_Ticker ();            
  break; 
   
@@ -1027,8 +1027,8 @@ void G_DoCompleted ()
  if (playeringame[i]) 
      G_PlayerFinishLevel (i);        // take away cards and stuff 
   
-    if (automapactive) 
- AM_Stop (); 
+    if (AutoMap::get().isAutoMapActive()) 
+  AutoMap::get().Stop (); 
  
     if ( gamemode != GameMode::commercial)
  switch(gamemap)
@@ -1132,7 +1132,7 @@ void G_DoCompleted ()
  
     gamestate = GameState::INTERMISSION; 
     viewactive = false; 
-    automapactive = false; 
+    AutoMap::get().setAutoMapActive(false); 
  
     if (statcopy)
  memcpy (statcopy, &wminfo, sizeof(wminfo));
@@ -1443,7 +1443,7 @@ G_InitNew
     usergame = true;                // will be set false if a demo 
     paused = false; 
     demoplayback = false; 
-    automapactive = false; 
+    AutoMap::get().setAutoMapActive(false); 
     viewactive = true; 
     gameepisode = episode; 
     gamemap = map; 

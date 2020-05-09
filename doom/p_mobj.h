@@ -25,7 +25,7 @@
 
 // Basics.
 #include "tables.h"
-#include "m_fixed.h"
+#include "fixed_point.h"
 
 // We need the thinker_t stuff.
 #include "d_think.h"

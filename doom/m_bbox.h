@@ -25,7 +25,7 @@
 
 #include <values.h>
 
-#include "m_fixed.h"
+#include "fixed_point.h"
 
 
 // Bounding box coordinate storage.
