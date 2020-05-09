@@ -1608,7 +1608,7 @@ void WI_loadData()
 		    if (wbs->epsd != 1 || j != 8) 
 		    {
 			// animations
-			sprintf(name, "WIA%d%.2d%.2d", wbs->epsd, j, i);  
+			sprintf(name, "WIA%d%2d%2d", wbs->epsd, j, i);  
 			a->p[i] = (patch_t*)W_CacheLumpName(name, PU_STATIC);
 		    }
 		    else
