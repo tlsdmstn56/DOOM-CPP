@@ -236,7 +236,7 @@ void P_DeathThink (player_t* player)
 void P_PlayerThink (player_t* player)
 {
     ticcmd_t*		cmd;
-    weapontype_t	newweapon;
+    WeaponType	newweapon;
 	
     // fixme: do this in the cheat code
     if (player->cheats & CF_NOCLIP)
@@ -285,33 +285,33 @@ void P_PlayerThink (player_t* player)
 	// The actual changing of the weapon is done
 	//  when the weapon psprite can do it
 	//  (read: not in the middle of an attack).
-	newweapon = (weapontype_t)((cmd->buttons&BT_WEAPONMASK)>>BT_WEAPONSHIFT);
+	newweapon = (WeaponType)((cmd->buttons&BT_WEAPONMASK)>>BT_WEAPONSHIFT);
 	
-	if (newweapon == wp_fist
-	    && player->weaponowned[wp_chainsaw]
-	    && !(player->readyweapon == wp_chainsaw
-		 && player->powers[pw_strength]))
+	if (newweapon == WeaponType::wp_fist
+	    && player->weaponowned[static_cast<int>(WeaponType::wp_chainsaw)]
+	    && !(player->readyweapon == WeaponType::wp_chainsaw
+		 && player->powers[INT(PowerType::pw_strength)]))
 	{
-	    newweapon = wp_chainsaw;
+	    newweapon = WeaponType::wp_chainsaw;
 	}
 	
-	if ( (gamemode == commercial)
-	    && newweapon == wp_shotgun 
-	    && player->weaponowned[wp_supershotgun]
-	    && player->readyweapon != wp_supershotgun)
+	if ( (gamemode == GameMode::commercial)
+	    && newweapon == WeaponType::wp_shotgun 
+	    && player->weaponowned[static_cast<int>(WeaponType::wp_supershotgun)]
+	    && player->readyweapon != WeaponType::wp_supershotgun)
 	{
-	    newweapon = wp_supershotgun;
+	    newweapon = WeaponType::wp_supershotgun;
 	}
 	
 
-	if (player->weaponowned[newweapon]
+	if (player->weaponowned[static_cast<int>(newweapon)]
 	    && newweapon != player->readyweapon)
 	{
-	    // Do not go to plasma or BFG in shareware,
+	    // Do not go to plasma or BFG in GameMode::shareware,
 	    //  even if cheated.
-	    if ((newweapon != wp_plasma
-		 && newweapon != wp_bfg)
-		|| (gamemode != shareware) )
+	    if ((newweapon != WeaponType::wp_plasma
+		 && newweapon != WeaponType::wp_bfg)
+		|| (gamemode != GameMode::shareware) )
 	    {
 		player->pendingweapon = newweapon;
 	    }
@@ -336,21 +336,21 @@ void P_PlayerThink (player_t* player)
     // Counters, time dependend power ups.
 
     // Strength counts up to diminish fade.
-    if (player->powers[pw_strength])
-	player->powers[pw_strength]++;	
+    if (player->powers[INT(PowerType::pw_strength)])
+	player->powers[INT(PowerType::pw_strength)]++;	
 		
-    if (player->powers[pw_invulnerability])
-	player->powers[pw_invulnerability]--;
+    if (player->powers[INT(PowerType::pw_invulnerability)])
+	player->powers[INT(PowerType::pw_invulnerability)]--;
 
-    if (player->powers[pw_invisibility])
-	if (! --player->powers[pw_invisibility] )
+    if (player->powers[INT(PowerType::pw_invisibility)])
+	if (! --player->powers[INT(PowerType::pw_invisibility)] )
 	    player->mo->flags &= ~MF_SHADOW;
 			
-    if (player->powers[pw_infrared])
-	player->powers[pw_infrared]--;
+    if (player->powers[INT(PowerType::pw_infrared)])
+	player->powers[INT(PowerType::pw_infrared)]--;
 		
-    if (player->powers[pw_ironfeet])
-	player->powers[pw_ironfeet]--;
+    if (player->powers[INT(PowerType::pw_ironfeet)])
+	player->powers[INT(PowerType::pw_ironfeet)]--;
 		
     if (player->damagecount)
 	player->damagecount--;
@@ -360,18 +360,18 @@ void P_PlayerThink (player_t* player)
 
     
     // Handling colormaps.
-    if (player->powers[pw_invulnerability])
+    if (player->powers[INT(PowerType::pw_invulnerability)])
     {
-	if (player->powers[pw_invulnerability] > 4*32
-	    || (player->powers[pw_invulnerability]&8) )
+	if (player->powers[INT(PowerType::pw_invulnerability)] > 4*32
+	    || (player->powers[INT(PowerType::pw_invulnerability)]&8) )
 	    player->fixedcolormap = INVERSECOLORMAP;
 	else
 	    player->fixedcolormap = 0;
     }
-    else if (player->powers[pw_infrared])	
+    else if (player->powers[INT(PowerType::pw_infrared)])	
     {
-	if (player->powers[pw_infrared] > 4*32
-	    || (player->powers[pw_infrared]&8) )
+	if (player->powers[INT(PowerType::pw_infrared)] > 4*32
+	    || (player->powers[INT(PowerType::pw_infrared)]&8) )
 	{
 	    // almost full bright
 	    player->fixedcolormap = 1;

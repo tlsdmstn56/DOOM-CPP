@@ -213,7 +213,7 @@ void S_Start()
   // start new music for the level
   mus_paused = 0;
   
-  if (gamemode == commercial)
+  if (gamemode == GameMode::commercial)
     mnum = mus_runnin + gamemap - 1;
   else
   {
@@ -239,7 +239,7 @@ void S_Start()
     }	
   
   // HACK FOR COMMERCIAL
-  //  if (commercial && mnum > mus_e3m9)	
+  //  if (GameMode::commercial && mnum > mus_e3m9)	
   //      mnum -= mus_e3m9;
   
   S_ChangeMusic(mnum, true);

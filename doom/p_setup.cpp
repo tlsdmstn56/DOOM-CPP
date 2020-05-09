@@ -314,8 +314,8 @@ void P_LoadThings (int lump)
     {
 	spawn = true;
 
-	// Do not spawn cool, new monsters if !commercial
-	if ( gamemode != commercial)
+	// Do not spawn cool, new monsters if !GameMode::commercial
+	if ( gamemode != GameMode::commercial)
 	{
 	    switch(mt->type)
 	    {
@@ -625,7 +625,7 @@ P_SetupLevel
     W_Reload ();			
 	   
     // find map name
-    if ( gamemode == commercial)
+    if ( gamemode == GameMode::commercial)
     {
 	if (map<10)
 	    sprintf (lumpname,"map0%i", map);

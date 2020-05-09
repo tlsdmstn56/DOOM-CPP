@@ -257,8 +257,8 @@ extern mobj_t**		blocklinks;	// for thing chains
 //
 // P_INTER
 //
-extern int		maxammo[NUMAMMO];
-extern int		clipammo[NUMAMMO];
+extern int		maxammo[static_cast<int>(AmmoType::NUMAMMO)];
+extern int		clipammo[static_cast<int>(AmmoType::NUMAMMO)];
 
 void
 P_TouchSpecialThing

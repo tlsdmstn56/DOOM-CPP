@@ -11,8 +11,8 @@
 #include <ctype.h>
 
 
-#define INPUT(port)       	inportb(port)
-#define OUTPUT(port,data)  	outportb(port,data)
+#define INPUT(port)        inportb(port)
+#define OUTPUT(port,data)   outportb(port,data)
 #define CLI()               disable()
 #define STI()               enable()
 
@@ -81,12 +81,12 @@ typedef unsigned char byte;
 
 
 
-#define	QUESIZE	2048
+#define QUESIZE 2048
 
 typedef struct
 {
-	long	head, tail;		// bytes are put on head and pulled from tail
-	unsigned char	data[QUESIZE];
+ long head, tail;  // bytes are put on head and pulled from tail
+ unsigned char data[QUESIZE];
 } que_t;
 
 void InitPort ();
@@ -98,5 +98,5 @@ void write_byte( int c );
 
 void Error (char *error, ...);
 
-extern	int		argc;
-extern	char	**argv;
+extern int  argc;
+extern char **argv;

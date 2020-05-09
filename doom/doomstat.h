@@ -55,10 +55,10 @@ extern  bool	devparm;	// DEBUG: launched with -devparm
 
 
 // -----------------------------------------------------
-// Game Mode - identify IWAD as shareware, retail etc.
+// Game Mode - identify IWAD as GameMode::shareware, GameMode::retail etc.
 //
-extern GameMode_t	gamemode;
-extern GameMission_t	gamemission;
+extern GameMode	gamemode;
+extern GameMission	gamemission;
 
 // Set if homebrew PWAD stuff has been added.
 extern  bool	modifiedgame;
@@ -66,7 +66,7 @@ extern  bool	modifiedgame;
 
 // -------------------------------------------
 // Language.
-extern  Language_t   language;
+extern  Language   language;
 
 
 // -------------------------------------------
@@ -230,7 +230,7 @@ extern  wbstartstruct_t		wminfo;
 
 // LUT of ammunition limits for each kind.
 // This doubles with BackPack powerup item.
-extern  int		maxammo[NUMAMMO];
+extern  int		maxammo[static_cast<int>(AmmoType::NUMAMMO)];
 
 
 

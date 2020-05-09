@@ -58,9 +58,9 @@ rcsid[] = "$Id: wi_stuff.c,v 1.7 1997/02/03 22:45:13 b1 Exp $";
 
 
 //
-// Different vetween registered DOOM (1994) and
-//  Ultimate DOOM - Final edition (retail, 1995?).
-// This is supposedly ignored for commercial
+// Different vetween GameMode::registered DOOM (1994) and
+//  Ultimate DOOM - Final edition (GameMode::retail, 1995?).
+// This is supposedly ignored for GameMode::commercial
 //  release (aka DOOM II), which had 34 maps
 //  in one episode. So there.
 #define NUMEPISODES	4
@@ -330,7 +330,7 @@ static int		cnt_time;
 static int		cnt_par;
 static int		cnt_pause;
 
-// # of commercial levels
+// # of GameMode::commercial levels
 static int		NUMCMAPS; 
 
 
@@ -505,7 +505,7 @@ void WI_initAnimatedBack()
     int		i;
     anim_t*	a;
 
-    if (gamemode == commercial)
+    if (gamemode == GameMode::commercial)
 	return;
 
     if (wbs->epsd > 2)
@@ -534,7 +534,7 @@ void WI_updateAnimatedBack()
     int		i;
     anim_t*	a;
 
-    if (gamemode == commercial)
+    if (gamemode == GameMode::commercial)
 	return;
 
     if (wbs->epsd > 2)
@@ -584,8 +584,8 @@ void WI_drawAnimatedBack()
 {
     int			i;
     anim_t*		a;
-
-    if (commercial)
+	// if (GameMode::commercial) TODO: Test
+    if (gamemode == GameMode::commercial) 
 	return;
 
     if (wbs->epsd > 2)
@@ -779,7 +779,7 @@ void WI_drawShowNextLoc()
     // draw animated background
     WI_drawAnimatedBack(); 
 
-    if ( gamemode != commercial)
+    if ( gamemode != GameMode::commercial)
     {
   	if (wbs->epsd > 2)
 	{
@@ -803,7 +803,7 @@ void WI_drawShowNextLoc()
     }
 
     // draws which level you are entering..
-    if ( (gamemode != commercial)
+    if ( (gamemode != GameMode::commercial)
 	 || wbs->next != 30)
 	WI_drawEL();  
 
@@ -960,7 +960,7 @@ void WI_updateDeathmatchStats()
 	{
 	    S_StartSound(0, sfx_slop);
 
-	    if ( gamemode == commercial)
+	    if ( gamemode == GameMode::commercial)
 		WI_initNoState();
 	    else
 		WI_initShowNextLoc();
@@ -987,9 +987,7 @@ void WI_drawDeathmatchStats()
     int		y;
     int		w;
     
-    int		lh;	// line height
-
-    lh = WI_SPACINGY;
+    int		lh = WI_SPACINGY;	// line height
 
     WI_slamBackground();
     
@@ -1240,7 +1238,7 @@ void WI_updateNetgameStats()
 	if (acceleratestage)
 	{
 	    S_StartSound(0, sfx_sgcock);
-	    if ( gamemode == commercial )
+	    if ( gamemode == GameMode::commercial )
 		WI_initNoState();
 	    else
 		WI_initShowNextLoc();
@@ -1416,7 +1414,7 @@ void WI_updateStats()
 	{
 	    S_StartSound(0, sfx_sgcock);
 
-	    if (gamemode == commercial)
+	    if (gamemode == GameMode::commercial)
 		WI_initNoState();
 	    else
 		WI_initShowNextLoc();
@@ -1508,7 +1506,7 @@ void WI_Ticker()
     if (bcnt == 1)
     {
 	// intermission music
-  	if ( gamemode == commercial )
+  	if ( gamemode == GameMode::commercial )
 	  S_ChangeMusic(mus_dm2int, true);
 	else
 	  S_ChangeMusic(mus_inter, true); 
@@ -1542,12 +1540,12 @@ void WI_loadData()
     char	name[9];
     anim_t*	a;
 
-    if (gamemode == commercial)
+    if (gamemode == GameMode::commercial)
 	strcpy(name, "INTERPIC");
     else 
 	sprintf(name, "WIMAP%d", wbs->epsd);
     
-    if ( gamemode == retail )
+    if ( gamemode == GameMode::retail )
     {
       if (wbs->epsd == 3)
 	strcpy(name,"INTERPIC");
@@ -1559,7 +1557,7 @@ void WI_loadData()
 
 
     // UNUSED unsigned char *pic = screens[1];
-    // if (gamemode == commercial)
+    // if (gamemode == GameMode::commercial)
     // {
     // darken the background image
     // while (pic != screens[1] + SCREENHEIGHT*SCREENWIDTH)
@@ -1569,7 +1567,7 @@ void WI_loadData()
     // }
     //}
 
-    if (gamemode == commercial)
+    if (gamemode == GameMode::commercial)
     {
 	NUMCMAPS = 32;								
 	lnames = (patch_t **) Z_Malloc(sizeof(patch_t*) * NUMCMAPS,
@@ -1652,7 +1650,7 @@ void WI_loadData()
     sp_secret = (patch_t*)W_CacheLumpName("WISCRT2", PU_STATIC);
 
     // Yuck. 
-    if (french)
+    if (language == Language::french)
     {
 	// "items"
 	if (netgame && !deathmatch)
@@ -1715,7 +1713,7 @@ void WI_unloadData()
     for (i=0 ; i<10 ; i++)
 	Z_ChangeTag(num[i], PU_CACHE);
     
-    if (gamemode == commercial)
+    if (gamemode == GameMode::commercial)
     {
   	for (i=0 ; i<NUMCMAPS ; i++)
 	    Z_ChangeTag(lnames[i], PU_CACHE);
@@ -1799,9 +1797,9 @@ void WI_initVariables(wbstartstruct_t* wbstartstruct)
     wbs = wbstartstruct;
 
 #ifdef RANGECHECKING
-    if (gamemode != commercial)
+    if (gamemode != GameMode::commercial)
     {
-      if ( gamemode == retail )
+      if ( gamemode == GameMode::retail )
 	RNGCHECK(wbs->epsd, 0, 3);
       else
 	RNGCHECK(wbs->epsd, 0, 2);
@@ -1830,7 +1828,7 @@ void WI_initVariables(wbstartstruct_t* wbstartstruct)
     if (!wbs->maxsecret)
 	wbs->maxsecret = 1;
 
-    if ( gamemode != retail )
+    if ( gamemode != GameMode::retail )
       if (wbs->epsd > 2)
 	wbs->epsd -= 3;
 }

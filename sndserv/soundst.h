@@ -79,7 +79,7 @@ struct MusicInfo
     // music data
     void*	data;
 
-    // music handle once registered
+    // music handle once GameMode::registered
     int handle;
 };
 

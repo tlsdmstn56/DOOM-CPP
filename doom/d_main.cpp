@@ -163,7 +163,7 @@ void D_ProcessEvents ()
     event_t*	ev;
 	
     // IF STORE DEMO, DO NOT ACCEPT INPUT
-    if ( ( gamemode == commercial )
+    if ( ( gamemode == GameMode::commercial )
 	 && (W_CheckNumForName("map01")<0) )
       return;
 	
@@ -459,7 +459,7 @@ void D_AdvanceDemo ()
     paused = false;
     gameaction = ga_nothing;
 
-    if ( gamemode == retail )
+    if ( gamemode == GameMode::retail )
       demosequence = (demosequence+1)%7;
     else
       demosequence = (demosequence+1)%6;
@@ -467,13 +467,13 @@ void D_AdvanceDemo ()
     switch (demosequence)
     {
       case 0:
-	if ( gamemode == commercial )
+	if ( gamemode == GameMode::commercial )
 	    pagetic = 35 * 11;
 	else
 	    pagetic = 170;
 	gamestate = GameState::DEMOSCREEN;
 	pagename = "TITLEPIC";
-	if ( gamemode == commercial )
+	if ( gamemode == GameMode::commercial )
 	  S_StartMusic(mus_dm2ttl);
 	else
 	  S_StartMusic (mus_intro);
@@ -491,7 +491,7 @@ void D_AdvanceDemo ()
 	break;
       case 4:
 	gamestate = GameState::DEMOSCREEN;
-	if ( gamemode == commercial)
+	if ( gamemode == GameMode::commercial)
 	{
 	    pagetic = 35 * 11;
 	    pagename = "TITLEPIC";
@@ -501,7 +501,7 @@ void D_AdvanceDemo ()
 	{
 	    pagetic = 200;
 
-	    if ( gamemode == retail )
+	    if ( gamemode == GameMode::retail )
 	      pagename = "CREDIT";
 	    else
 	      pagename = "HELP2";
@@ -616,7 +616,7 @@ void IdentifyVersion ()
 
     if (M_CheckParm ("-shdev"))
     {
-	gamemode = shareware;
+	gamemode = GameMode::shareware;
 	devparm = true;
 	D_AddFile (DEVDATA"doom1.wad");
 	D_AddFile (DEVMAPS"data_se/texture1.lmp");
@@ -627,7 +627,7 @@ void IdentifyVersion ()
 
     if (M_CheckParm ("-regdev"))
     {
-	gamemode = registered;
+	gamemode = GameMode::registered;
 	devparm = true;
 	D_AddFile (DEVDATA"doom.wad");
 	D_AddFile (DEVMAPS"data_se/texture1.lmp");
@@ -639,7 +639,7 @@ void IdentifyVersion ()
 
     if (M_CheckParm ("-comdev"))
     {
-	gamemode = commercial;
+	gamemode = GameMode::commercial;
 	devparm = true;
 	/* I don't bother
 	if(plutonia)
@@ -657,10 +657,10 @@ void IdentifyVersion ()
 
     if ( !access (doom2fwad,R_OK) )
     {
-	gamemode = commercial;
+	gamemode = GameMode::commercial;
 	// C'est ridicule!
 	// Let's handle languages in config files, okay?
-	language = french;
+	language = Language::french;
 	printf("French version\n");
 	D_AddFile (doom2fwad);
 	return;
@@ -668,48 +668,48 @@ void IdentifyVersion ()
 
     if ( !access (doom2wad,R_OK) )
     {
-	gamemode = commercial;
+	gamemode = GameMode::commercial;
 	D_AddFile (doom2wad);
 	return;
     }
 
     if ( !access (plutoniawad, R_OK ) )
     {
-      gamemode = commercial;
+      gamemode = GameMode::commercial;
       D_AddFile (plutoniawad);
       return;
     }
 
     if ( !access ( tntwad, R_OK ) )
     {
-      gamemode = commercial;
+      gamemode = GameMode::commercial;
       D_AddFile (tntwad);
       return;
     }
 
     if ( !access (doomuwad,R_OK) )
     {
-      gamemode = retail;
+      gamemode = GameMode::retail;
       D_AddFile (doomuwad);
       return;
     }
 
     if ( !access (doomwad,R_OK) )
     {
-      gamemode = registered;
+      gamemode = GameMode::registered;
       D_AddFile (doomwad);
       return;
     }
 
     if ( !access (doom1wad,R_OK) )
     {
-      gamemode = shareware;
+      gamemode = GameMode::shareware;
       D_AddFile (doom1wad);
       return;
     }
 
     printf("Game mode indeterminate.\n");
-    gamemode = indetermined;
+    gamemode = GameMode::indetermined;
 
     // We don't abort. Let's see what the PWAD contains.
     //exit(1);
@@ -816,28 +816,28 @@ void D_DoomMain ()
 
     switch ( gamemode )
     {
-      case retail:
+      case GameMode::retail:
 	sprintf (title,
 		 "                         "
 		 "The Ultimate DOOM Startup v%i.%i"
 		 "                           ",
 		 VERSION/100,VERSION%100);
 	break;
-      case shareware:
+      case GameMode::shareware:
 	sprintf (title,
 		 "                            "
 		 "DOOM Shareware Startup v%i.%i"
 		 "                           ",
 		 VERSION/100,VERSION%100);
 	break;
-      case registered:
+      case GameMode::registered:
 	sprintf (title,
 		 "                            "
 		 "DOOM Registered Startup v%i.%i"
 		 "                           ",
 		 VERSION/100,VERSION%100);
 	break;
-      case commercial:
+      case GameMode::commercial:
 	sprintf (title,
 		 "                         "
 		 "DOOM 2: Hell on Earth v%i.%i"
@@ -914,16 +914,16 @@ void D_DoomMain ()
 	// Map name handling.
 	switch (gamemode )
 	{
-	  case shareware:
-	  case retail:
-	  case registered:
+	  case GameMode::shareware:
+	  case GameMode::retail:
+	  case GameMode::registered:
 	    sprintf (file,"~"DEVMAPS"E%cM%c.wad",
 		     myargv[p+1][0], myargv[p+2][0]);
 	    printf("Warping to Episode %s, Map %s.\n",
 		   myargv[p+1],myargv[p+2]);
 	    break;
 	    
-	  case commercial:
+	  case GameMode::commercial:
 	  default:
 	    p = atoi (myargv[p+1]);
 	    if (p<10)
@@ -997,7 +997,7 @@ void D_DoomMain ()
     p = M_CheckParm ("-warp");
     if (p && p < myargc-1)
     {
-	if (gamemode == commercial)
+	if (gamemode == GameMode::commercial)
 	    startmap = atoi (myargv[p+1]);
 	else
 	{
@@ -1034,16 +1034,16 @@ void D_DoomMain ()
 	};
 	int i;
 	
-	if ( gamemode == shareware)
-	    I_Error("\nYou cannot -file with the shareware "
+	if ( gamemode == GameMode::shareware)
+	    I_Error("\nYou cannot -file with the GameMode::shareware "
 		    "version. Register!");
 
 	// Check for fake IWAD with right name,
 	// but w/o all the lumps of the registered version. 
-	if (gamemode == registered)
+	if (gamemode == GameMode::registered)
 	    for (i = 0;i < 23; i++)
 		if (W_CheckNumForName(name[i])<0)
-		    I_Error("\nThis is not the registered version.");
+		    I_Error("\nThis is not the GameMode::registered version.");
     }
     
     // Iff additonal PWAD files are used, print modified banner
@@ -1064,17 +1064,17 @@ void D_DoomMain ()
     // Check and print which version is executed.
     switch ( gamemode )
     {
-      case shareware:
-      case indetermined:
+      case GameMode::shareware:
+      case GameMode::indetermined:
 	printf (
 	    "===========================================================================\n"
 	    "                                Shareware!\n"
 	    "===========================================================================\n"
 	);
 	break;
-      case registered:
-      case retail:
-      case commercial:
+      case GameMode::registered:
+      case GameMode::retail:
+      case GameMode::commercial:
 	printf (
 	    "===========================================================================\n"
 	    "                 Commercial product - do not distribute!\n"
