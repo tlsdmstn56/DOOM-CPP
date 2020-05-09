@@ -21,19 +21,12 @@
 //-----------------------------------------------------------------------------
 
 
-#ifndef __DOOMTYPE__
-#define __DOOMTYPE__
-
+#pragma once
 
 #ifndef __BYTEBOOL__
 #define __BYTEBOOL__
 // Fixed to use builtin bool type with C++.
-#ifdef __cplusplus
-
-#else
-typedef enum {false, true} bool;
-#endif
-typedef unsigned char byte;
+using byte = unsigned char;
 #endif
 
 
@@ -54,13 +47,3 @@ typedef unsigned char byte;
 #define MININT		((int)0x80000000)	
 #define MINLONG		((long)0x80000000)
 #endif
-
-
-
-
-#endif
-//-----------------------------------------------------------------------------
-//
-// $Log:$
-//
-//-----------------------------------------------------------------------------
