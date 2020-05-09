@@ -241,37 +241,37 @@ enum class PowerDuration
 // This is the stuff configured by Setup.Exe.
 // Most key data are simple ascii (uppercased).
 //
-#define KEY_RIGHTARROW 0xae
-#define KEY_LEFTARROW 0xac
-#define KEY_UPARROW 0xad
-#define KEY_DOWNARROW 0xaf
-#define KEY_ESCAPE 27
-#define KEY_ENTER 13
-#define KEY_TAB  9
-#define KEY_F1  (0x80+0x3b)
-#define KEY_F2  (0x80+0x3c)
-#define KEY_F3  (0x80+0x3d)
-#define KEY_F4  (0x80+0x3e)
-#define KEY_F5  (0x80+0x3f)
-#define KEY_F6  (0x80+0x40)
-#define KEY_F7  (0x80+0x41)
-#define KEY_F8  (0x80+0x42)
-#define KEY_F9  (0x80+0x43)
-#define KEY_F10  (0x80+0x44)
-#define KEY_F11  (0x80+0x57)
-#define KEY_F12  (0x80+0x58)
+constexpr const int KEY_RIGHTARROW = 0xae;
+constexpr const int KEY_LEFTARROW = 0xac;
+constexpr const int KEY_UPARROW = 0xad;
+constexpr const int KEY_DOWNARROW = 0xaf;
+constexpr const int KEY_ESCAPE = 27;
+constexpr const int KEY_ENTER = 13;
+constexpr const int KEY_TAB =  9;
+constexpr const int KEY_F1 =  (0x80+0x3b);
+constexpr const int KEY_F2 =  (0x80+0x3c);
+constexpr const int KEY_F3 =  (0x80+0x3d);
+constexpr const int KEY_F4 =  (0x80+0x3e);
+constexpr const int KEY_F5 =  (0x80+0x3f);
+constexpr const int KEY_F6 =  (0x80+0x40);
+constexpr const int KEY_F7 =  (0x80+0x41);
+constexpr const int KEY_F8 =  (0x80+0x42);
+constexpr const int KEY_F9 =  (0x80+0x43);
+constexpr const int KEY_F10 =  (0x80+0x44);
+constexpr const int KEY_F11 =  (0x80+0x57);
+constexpr const int KEY_F12 =  (0x80+0x58);
 
-#define KEY_BACKSPACE 127
-#define KEY_PAUSE 0xff
+constexpr const int KEY_BACKSPACE = 127;
+constexpr const int KEY_PAUSE = 0xff;
 
-#define KEY_EQUALS 0x3d
-#define KEY_MINUS 0x2d
+constexpr const int KEY_EQUALS = 0x3d;
+constexpr const int KEY_MINUS = 0x2d;
 
-#define KEY_RSHIFT (0x80+0x36)
-#define KEY_RCTRL (0x80+0x1d)
-#define KEY_RALT (0x80+0x38)
+constexpr const int KEY_RSHIFT = (0x80+0x36);
+constexpr const int KEY_RCTRL = (0x80+0x1d);
 
-#define KEY_LALT KEY_RALT
+constexpr const int KEY_RALT = (0x80+0x38);
+constexpr const int KEY_LALT = KEY_RALT;
 
 
 
@@ -280,7 +280,7 @@ enum class PowerDuration
 //#include "doomtype.h"
 
 // Fixed point.
-//#include "m_fixed.h"
+//#include "fixed_point.h"
 
 // Endianess handling.
 //#include "m_swap.h"
