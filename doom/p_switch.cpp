@@ -47,7 +47,7 @@ rcsid[] = "$Id: p_switch.c,v 1.3 1997/01/28 22:08:29 b1 Exp $";
 //
 switchlist_t alphSwitchList[] =
 {
-    // Doom shareware episode 1 switches
+    // Doom GameMode::shareware episode 1 switches
     {"SW1BRCOM",	"SW2BRCOM",	1},
     {"SW1BRN1",	"SW2BRN1",	1},
     {"SW1BRN2",	"SW2BRN2",	1},
@@ -68,7 +68,7 @@ switchlist_t alphSwitchList[] =
     {"SW1STONE",	"SW2STONE",	1},
     {"SW1STRTN",	"SW2STRTN",	1},
     
-    // Doom registered episodes 2&3 switches
+    // Doom GameMode::registered episodes 2&3 switches
     {"SW1BLUE",	"SW2BLUE",	2},
     {"SW1CMT",		"SW2CMT",	2},
     {"SW1GARG",	"SW2GARG",	2},
@@ -112,10 +112,10 @@ void P_InitSwitchList()
 	
     episode = 1;
 
-    if (gamemode == registered)
+    if (gamemode == GameMode::registered)
 	episode = 2;
     else
-	if ( gamemode == commercial )
+	if ( gamemode == GameMode::commercial )
 	    episode = 3;
 		
     for (index = 0,i = 0;i < MAXSWITCHES;i++)

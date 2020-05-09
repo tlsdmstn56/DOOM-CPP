@@ -459,7 +459,7 @@ void R_InitTextures ()
     
     // Load the map texture definitions from textures.lmp.
     // The data is contained in one or two lumps,
-    //  TEXTURE1 for shareware, plus TEXTURE2 for commercial.
+    //  TEXTURE1 for GameMode::shareware, plus TEXTURE2 for GameMode::commercial.
     maptex = maptex1 = (decltype(maptex1))W_CacheLumpName ("TEXTURE1", PU_STATIC);
     numtextures1 = LONG(*maptex);
     maxoff = W_LumpLength (W_GetNumForName ("TEXTURE1"));

@@ -15,13 +15,13 @@
 // for more details.
 //
 // DESCRIPTION:
-// Savegame I/O, archiving, persistence.
+// WAD I/O functions.
 //
 //-----------------------------------------------------------------------------
 
 
-#ifndef __P_SAVEG__
-#define __P_SAVEG__
+#ifndef __W_WAD__
+#define __W_WAD__
 
 
 #ifdef __GNUG__
@@ -29,18 +29,56 @@
 #endif
 
 
-// Persistent storage/archiving.
-// These are the load / save game routines.
-void P_ArchivePlayers ();
-void P_UnArchivePlayers ();
-void P_ArchiveWorld ();
-void P_UnArchiveWorld ();
-void P_ArchiveThinkers ();
-void P_UnArchiveThinkers ();
-void P_ArchiveSpecials ();
-void P_UnArchiveSpecials ();
+//
+// TYPES
+//
+typedef struct
+{
+    // Should be "IWAD" or "PWAD".
+    char  identification[4];  
+    int   numlumps;
+    int   infotableofs;
+    
+} wadinfo_t;
 
-extern byte*  save_p; 
+
+typedef struct
+{
+    int   filepos;
+    int   size;
+    char  name[8];
+    
+} filelump_t;
+
+//
+// WADFILE I/O related stuff.
+//
+typedef struct
+{
+    char name[8];
+    int  handle;
+    int  position;
+    int  size;
+} lumpinfo_t;
+
+
+extern void**  lumpcache;
+extern lumpinfo_t* lumpinfo;
+extern int  numlumps;
+
+void    W_InitMultipleFiles (char** filenames);
+void    W_Reload ();
+
+int W_CheckNumForName (char* name);
+int W_GetNumForName (char* name);
+
+int W_LumpLength (int lump);
+void    W_ReadLump (int lump, void *dest);
+
+void* W_CacheLumpNum (int lump, int tag);
+void* W_CacheLumpName (char* name, int tag);
+
+
 
 
 #endif

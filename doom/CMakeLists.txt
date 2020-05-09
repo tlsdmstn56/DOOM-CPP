@@ -2,6 +2,7 @@ file(GLOB DOOM_SRC ./*.cpp)
 add_executable(doom ${DOOM_SRC})
 target_compile_definitions(doom 
     PRIVATE NORMALUNIX LINUX
+    PUBLIC VERSION=110
 )
 target_link_libraries(doom 
     PRIVATE m X11 Xext

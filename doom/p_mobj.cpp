@@ -687,7 +687,7 @@ void P_SpawnPlayer (mapthing_t* mthing)
     
     // give all cards in death match mode
     if (deathmatch)
-	for (i=0 ; i<NUMCARDS ; i++)
+	for (i=0 ; i<static_cast<int>(Card::NUMCARDS) ; i++)
 	    p->cards[i] = true;
 			
     if (mthing->type-1 == consoleplayer)

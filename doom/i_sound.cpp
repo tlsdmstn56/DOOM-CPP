@@ -205,7 +205,7 @@ getsfx
     //  sound handling, in it is not (yet/anymore)
     //  gamemode aware. That means, sounds from
     //  DOOM II will be requested even with DOOM
-    //  shareware.
+    //  GameMode::shareware.
     // The sound list is wired into sounds.c,
     //  which sets the external variable.
     // I do not do runtime patches to that

@@ -15,7 +15,7 @@
 // for more details.
 //
 // DESCRIPTION:
-//	The not so system specific sound interface.
+// The not so system specific sound interface.
 //
 //-----------------------------------------------------------------------------
 
@@ -37,8 +37,8 @@
 //
 void
 S_Init
-( int		sfxVolume,
-  int		musicVolume );
+( int  sfxVolume,
+  int  musicVolume );
 
 
 
@@ -57,17 +57,17 @@ void S_Start();
 //
 void
 S_StartSound
-( void*		origin,
-  int		sound_id );
+( void*  origin,
+  int  sound_id );
 
 
 
 // Will start a sound at a given volume.
 void
 S_StartSoundAtVolume
-( void*		origin,
-  int		sound_id,
-  int		volume );
+( void*  origin,
+  int  sound_id,
+  int  volume );
 
 
 // Stop sound for thing at <origin>
@@ -81,8 +81,8 @@ void S_StartMusic(int music_id);
 //  and set whether looping
 void
 S_ChangeMusic
-( int		music_id,
-  int		looping );
+( int  music_id,
+  int  looping );
 
 // Stops the music fer sure.
 void S_StopMusic();

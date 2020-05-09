@@ -754,12 +754,12 @@ void M_DrawReadThis1()
     inhelpscreens = true;
     switch ( gamemode )
     {
-      case commercial:
+      case GameMode::commercial:
 	V_DrawPatchDirect (0,0,0,(patch_t*)W_CacheLumpName("HELP",PU_CACHE));
 	break;
-      case shareware:
-      case registered:
-      case retail:
+      case GameMode::shareware:
+      case GameMode::registered:
+      case GameMode::retail:
 	V_DrawPatchDirect (0,0,0,(patch_t*)W_CacheLumpName("HELP1",PU_CACHE));
 	break;
       default:
@@ -778,13 +778,13 @@ void M_DrawReadThis2()
     inhelpscreens = true;
     switch ( gamemode )
     {
-      case retail:
-      case commercial:
+      case GameMode::retail:
+      case GameMode::commercial:
 	// This hack keeps us from having to change menus.
 	V_DrawPatchDirect (0,0,0,(patch_t*)W_CacheLumpName("CREDIT",PU_CACHE));
 	break;
-      case shareware:
-      case registered:
+      case GameMode::shareware:
+      case GameMode::registered:
 	V_DrawPatchDirect (0,0,0,(patch_t*)W_CacheLumpName("HELP2",PU_CACHE));
 	break;
       default:
@@ -878,7 +878,7 @@ void M_NewGame(int choice)
 	return;
     }
 	
-    if ( gamemode == commercial )
+    if ( gamemode == GameMode::commercial )
 	M_SetupNextMenu(&NewDef);
     else
 	M_SetupNextMenu(&EpiDef);
@@ -918,7 +918,7 @@ void M_ChooseSkill(int choice)
 
 void M_Episode(int choice)
 {
-    if ( (gamemode == shareware)
+    if ( (gamemode == GameMode::shareware)
 	 && choice)
     {
 	M_StartMessage(SWSTRING, (void*)NULL, false);
@@ -927,7 +927,7 @@ void M_Episode(int choice)
     }
 
     // Yet another hack...
-    if ( (gamemode == registered)
+    if ( (gamemode == GameMode::registered)
 	 && (choice > 2))
     {
       fprintf( stderr,
@@ -1083,7 +1083,7 @@ void M_QuitResponse(int ch)
 	return;
     if (!netgame)
     {
-	if (gamemode == commercial)
+	if (gamemode == GameMode::commercial)
 	    S_StartSound(NULL,quitsounds2[(gametic>>2)&7]);
 	else
 	    S_StartSound(NULL,quitsounds[(gametic>>2)&7]);
@@ -1099,7 +1099,7 @@ void M_QuitDOOM(int choice)
 {
   // We pick index 0 which is language sensitive,
   //  or one at random, between 1 and maximum number.
-  if (language != english )
+  if (language != Language::english )
     sprintf(endstring,"%s\n\n"DOSY, endmsg[0] );
   else
     sprintf(endstring,"%s\n\n"DOSY, endmsg[ (gametic%(NUM_QUITMESSAGES-2))+1 ]);
@@ -1536,7 +1536,7 @@ bool M_Responder (event_t* ev)
 	  case KEY_F1:            // Help key
 	    M_StartControlPanel ();
 
-	    if ( gamemode == retail )
+	    if ( gamemode == GameMode::retail )
 	      currentMenu = &ReadDef2;
 	    else
 	      currentMenu = &ReadDef1;
@@ -1863,7 +1863,7 @@ void M_Init ()
   
     switch ( gamemode )
     {
-      case commercial:
+      case GameMode::commercial:
 	// This is used because DOOM 2 had only one HELP
         //  page. I use CREDIT as second page now, but
 	//  kept this hack for educational purposes.
@@ -1876,14 +1876,14 @@ void M_Init ()
 	ReadDef1.y = 165;
 	ReadMenu1[0].routine = M_FinishReadThis;
 	break;
-      case shareware:
+      case GameMode::shareware:
 	// Episode 2 and 3 are handled,
 	//  branching to an ad screen.
-      case registered:
+      case GameMode::registered:
 	// We need to remove the fourth episode.
 	EpiDef.numitems--;
 	break;
-      case retail:
+      case GameMode::retail:
 	// We are fine.
       default:
 	break;
