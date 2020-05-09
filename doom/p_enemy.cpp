@@ -587,7 +587,7 @@ extern "C" void A_KeenDie (mobj_t* mo)
     }
 
     junk.tag = 666;
-    EV_DoDoor(&junk,open);
+    EV_DoDoor(&junk,VLDoorType::open);
 }
 
 
@@ -1007,7 +1007,7 @@ extern "C" void A_SkelMissile (mobj_t* actor)
     A_FaceTarget (actor);
     actor->z += 16*FRACUNIT; // so missile spawns higher
     mo = P_SpawnMissile (actor, actor->target, MObjType::MT_TRACER);
-    actor->z -= 16*FRACUNIT; // back to normal
+    actor->z -= 16*FRACUNIT; // back to VLDoorType::normal
 
     mo->x += mo->momx;
     mo->y += mo->momy;
@@ -1220,7 +1220,7 @@ extern "C" void A_VileChase (mobj_t* actor)
  }
     }
 
-    // Return to normal attack.
+    // Return to VLDoorType::normal attack.
     A_Chase (actor);
 }
 
@@ -1737,7 +1737,7 @@ extern "C" void A_BossDeath (mobj_t* mo)
      {
        case 6:
   junk.tag = 666;
-  EV_DoDoor (&junk, blazeOpen);
+  EV_DoDoor (&junk, VLDoorType::blazeOpen);
   return;
   break;
   

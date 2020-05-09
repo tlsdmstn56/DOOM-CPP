@@ -325,7 +325,7 @@ void    P_ActivateInStasis(int tag);
 //
 // P_DOORS
 //
-typedef enum
+enum class VLDoorType
 {
     normal,
     close30ThenOpen,
@@ -335,15 +335,14 @@ typedef enum
     blazeRaise,
     blazeOpen,
     blazeClose
-
-} vldoor_e;
+};
 
 
 
 typedef struct
 {
     thinker_t	thinker;
-    vldoor_e	type;
+    VLDoorType	type;
     sector_t*	sector;
     fixed_t	topheight;
     fixed_t	speed;
@@ -372,12 +371,12 @@ EV_VerticalDoor
 int
 EV_DoDoor
 ( line_t*	line,
-  vldoor_e	type );
+  VLDoorType	type );
 
 int
 EV_DoLockedDoor
 ( line_t*	line,
-  vldoor_e	type,
+  VLDoorType	type,
   mobj_t*	thing );
 
 void    T_VerticalDoor (vldoor_t* door);
