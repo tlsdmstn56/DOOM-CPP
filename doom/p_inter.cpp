@@ -36,7 +36,7 @@ rcsid[] = "$Id: p_inter.c,v 1.4 1997/02/03 22:45:11 b1 Exp $";
 #include "m_random.h"
 #include "i_system.h"
 
-#include "am_map.h"
+#include "auto_map.h"
 
 #include "p_local.h"
 
@@ -707,11 +707,11 @@ P_KillMobj
  P_DropWeapon (target->player);
 
  if (target->player == &players[consoleplayer]
-     && automapactive)
+     && AutoMap::get().isAutoMapActive())
  {
      // don't die in auto map,
      // switch view prior to dying
-     AM_Stop ();
+     AutoMap::get().Stop ();
  }
  
     }

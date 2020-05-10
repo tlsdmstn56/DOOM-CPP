@@ -129,7 +129,6 @@ extern int snd_DesiredSfxDevice;
 //  status bar explicitely.
 extern  bool statusbaractive;
 
-extern  bool automapactive;	// In AutoMap mode?
 extern  bool	menuactive;	// Menu overlayed?
 extern  bool	paused;		// Game Pause?
 

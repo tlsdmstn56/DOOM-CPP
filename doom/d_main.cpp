@@ -69,7 +69,7 @@
 #include "hu_stuff.h"
 #include "wi_stuff.h"
 #include "st_stuff.h"
-#include "am_map.h"
+#include "auto_map.h"
 
 #include "p_setup.h"
 #include "r_local.h"
@@ -237,8 +237,8 @@ void D_Display ()
       case GameState::LEVEL:
 	if (!gametic)
 	    break;
-	if (automapactive)
-	    AM_Drawer ();
+	if (AutoMap::get().isAutoMapActive())
+	    AutoMap::get().Drawer();
 	if (wipe || (viewheight != 200 && fullscreen) )
 	    redrawsbar = true;
 	if (inhelpscreensstate && !inhelpscreens)
@@ -264,7 +264,7 @@ void D_Display ()
     I_UpdateNoBlit ();
     
     // draw the view directly
-    if (gamestate == GameState::LEVEL && !automapactive && gametic)
+    if (gamestate == GameState::LEVEL && !AutoMap::get().isAutoMapActive() && gametic)
 	R_RenderPlayerView (&players[displayplayer]);
 
     if (gamestate == GameState::LEVEL && gametic)
@@ -282,7 +282,7 @@ void D_Display ()
     }
 
     // see if the border needs to be updated to the screen
-    if (gamestate == GameState::LEVEL && !automapactive && scaledviewwidth != 320)
+    if (gamestate == GameState::LEVEL && !AutoMap::get().isAutoMapActive() && scaledviewwidth != 320)
     {
 	if (menuactive || menuactivestate || !viewactivestate)
 	    borderdrawcount = 3;
@@ -302,7 +302,7 @@ void D_Display ()
     // draw pause pic
     if (paused)
     {
-	if (automapactive)
+	if (AutoMap::get().isAutoMapActive())
 	    y = 4;
 	else
 	    y = viewwindowy+4;
@@ -316,7 +316,7 @@ void D_Display ()
     NetUpdate ();         // send out any new accumulation
 
 
-    // normal update
+    // VLDoorType::normal update
     if (!wipe)
     {
 	I_FinishUpdate ();              // page flip or blit buffer

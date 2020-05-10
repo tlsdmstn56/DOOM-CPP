@@ -46,7 +46,7 @@ rcsid[] = "$Id: st_stuff.c,v 1.6 1997/02/03 22:45:13 b1 Exp $";
 #include "p_local.h"
 #include "p_inter.h"
 
-#include "am_map.h"
+#include "auto_map.h"
 #include "m_cheat.h"
 
 #include "s_sound.h"
@@ -521,16 +521,16 @@ ST_Responder (event_t* ev)
     
   // Filter automap on/off.
   if (ev->type == EventType::KeyUp
-      && ((ev->data1 & 0xffff0000) == AM_MSGHEADER))
+      && ((ev->data1 & 0xffff0000) == MSGHEADER))
   {
     switch(ev->data1)
     {
-      case AM_MSGENTERED:
+      case MSGENTERED:
  st_gamestate = AutomapState;
  st_firsttime = true;
  break;
  
-      case AM_MSGEXITED:
+      case MSGEXITED:
  // fprintf(stderr, "AM exited\n");
  st_gamestate = FirstPersonState;
  break;
@@ -1108,7 +1108,7 @@ void ST_diffDraw()
 void ST_Drawer (bool fullscreen, bool refresh)
 {
   
-    st_statusbaron = (!fullscreen) || automapactive;
+    st_statusbaron = (!fullscreen) || AutoMap::get().isAutoMapActive();
     st_firsttime = st_firsttime || refresh;
 
     // Do red-/gold-shifts from damage/items
