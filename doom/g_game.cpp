@@ -70,6 +70,8 @@ rcsid[] = "$Id: g_game.c,v 1.8 1997/02/03 22:45:09 b1 Exp $";
 
 #include "g_game.h"
 
+#include "event.h"
+
 
 #define SAVEGAMESIZE 0x2c000
 #define SAVESTRINGSIZE 24
@@ -94,7 +96,7 @@ void G_DoWorldDone ();
 void G_DoSaveGame (); 
  
  
-gameaction_t    gameaction; 
+GameActionType    gameaction; 
 GameState     gamestate; 
 Skill         gameskill; 
 bool  respawnmonsters;
@@ -329,11 +331,11 @@ void G_BuildTiccmd (ticcmd_t* cmd)
  
     if (gamekeydown[key_fire] || mousebuttons[mousebfire] 
  || joybuttons[joybfire]) 
- cmd->buttons |= BT_ATTACK; 
+ cmd->buttons |= INT(ButtonCodeType::BT_ATTACK); 
  
     if (gamekeydown[key_use] || joybuttons[joybuse] ) 
     { 
- cmd->buttons |= BT_USE;
+ cmd->buttons |= INT(ButtonCodeType::BT_USE);
  // clear double clicks if hit use button 
  dclicks = 0;                   
     } 
@@ -342,8 +344,8 @@ void G_BuildTiccmd (ticcmd_t* cmd)
     for (i=0 ; i<static_cast<int>(WeaponType::NUMWEAPONS)-1 ; i++)        
  if (gamekeydown['1'+i]) 
  { 
-     cmd->buttons |= BT_CHANGE; 
-     cmd->buttons |= i<<BT_WEAPONSHIFT; 
+     cmd->buttons |= INT(ButtonCodeType::BT_CHANGE); 
+     cmd->buttons |= i<<INT(ButtonCodeType::BT_WEAPONSHIFT); 
      break; 
  }
     
@@ -359,7 +361,7 @@ void G_BuildTiccmd (ticcmd_t* cmd)
      dclicks++; 
  if (dclicks == 2) 
  { 
-     cmd->buttons |= BT_USE; 
+     cmd->buttons |= INT(ButtonCodeType::BT_USE); 
      dclicks = 0; 
  } 
  else 
@@ -386,7 +388,7 @@ void G_BuildTiccmd (ticcmd_t* cmd)
      dclicks2++; 
  if (dclicks2 == 2) 
  { 
-     cmd->buttons |= BT_USE; 
+     cmd->buttons |= INT(ButtonCodeType::BT_USE); 
      dclicks2 = 0; 
  } 
  else 
@@ -426,13 +428,13 @@ void G_BuildTiccmd (ticcmd_t* cmd)
     if (sendpause) 
     { 
  sendpause = false; 
- cmd->buttons = BT_SPECIAL | BTS_PAUSE; 
+ cmd->buttons = INT(ButtonCodeType::BT_SPECIAL) | INT(ButtonCodeType::BTS_PAUSE); 
     } 
  
     if (sendsave) 
     { 
  sendsave = false; 
- cmd->buttons = BT_SPECIAL | BTS_SAVEGAME | (savegameslot<<BTS_SAVESHIFT); 
+ cmd->buttons = INT(ButtonCodeType::BT_SPECIAL) | INT(ButtonCodeType::BTS_SAVEGAME) | (savegameslot<<INT(ButtonCodeType::BTS_SAVESHIFT)); 
     } 
 } 
  
@@ -484,7 +486,7 @@ void G_DoLoadLevel ()
     P_SetupLevel (gameepisode, gamemap, 0, gameskill);    
     displayplayer = consoleplayer;  // view the guy you are playing    
     starttime = I_GetTime (); 
-    gameaction = ga_nothing; 
+    gameaction = GameActionType::ga_nothing; 
     Z_CheckHeap ();
     
     // clear cmd building stuff
@@ -501,7 +503,7 @@ void G_DoLoadLevel ()
 // G_Responder  
 // Get info needed to make ticcmd_ts for the players.
 // 
-bool G_Responder (event_t* ev) 
+bool G_Responder (Event* ev) 
 { 
     // allow spy mode changes even during the demo
     if (gamestate == GameState::LEVEL && ev->type == EventType::KeyDown 
@@ -518,7 +520,7 @@ bool G_Responder (event_t* ev)
     }
     
     // any other key pops up menu if in demos
-    if (gameaction == ga_nothing && !singledemo && 
+    if (gameaction == GameActionType::ga_nothing && !singledemo && 
  (demoplayback || gamestate == GameState::DEMOSCREEN) 
  ) 
     { 
@@ -614,39 +616,39 @@ void G_Ticker ()
      G_DoReborn (i);
     
     // do things to change the game state
-    while (gameaction != ga_nothing) 
+    while (gameaction != GameActionType::ga_nothing) 
     { 
  switch (gameaction) 
  { 
-   case ga_loadlevel: 
+   case GameActionType::ga_loadlevel: 
      G_DoLoadLevel (); 
      break; 
-   case ga_newgame: 
+   case GameActionType::ga_newgame: 
      G_DoNewGame (); 
      break; 
-   case ga_loadgame: 
+   case GameActionType::ga_loadgame: 
      G_DoLoadGame (); 
      break; 
-   case ga_savegame: 
+   case GameActionType::ga_savegame: 
      G_DoSaveGame (); 
      break; 
-   case ga_playdemo: 
+   case GameActionType::ga_playdemo: 
      G_DoPlayDemo (); 
      break; 
-   case ga_completed: 
+   case GameActionType::ga_completed: 
      G_DoCompleted (); 
      break; 
-   case ga_victory: 
+   case GameActionType::ga_victory: 
      F_StartFinale (); 
      break; 
-   case ga_worlddone: 
+   case GameActionType::ga_worlddone: 
      G_DoWorldDone (); 
      break; 
-   case ga_screenshot: 
+   case GameActionType::ga_screenshot: 
      M_ScreenShot (); 
-     gameaction = ga_nothing; 
+     gameaction = GameActionType::ga_nothing; 
      break; 
-   case ga_nothing: 
+   case GameActionType::ga_nothing: 
      break; 
  } 
     }
@@ -699,11 +701,11 @@ void G_Ticker ()
     {
  if (playeringame[i]) 
  { 
-     if (players[i].cmd.buttons & BT_SPECIAL) 
+     if (players[i].cmd.buttons & INT(ButtonCodeType::BT_SPECIAL)) 
      { 
-  switch (players[i].cmd.buttons & BT_SPECIALMASK) 
+  switch (players[i].cmd.buttons & INT(ButtonCodeType::BT_SPECIALMASK)) 
   { 
-    case BTS_PAUSE: 
+    case INT(ButtonCodeType::BTS_PAUSE): 
       paused ^= 1; 
       if (paused) 
    S_PauseSound (); 
@@ -711,12 +713,12 @@ void G_Ticker ()
    S_ResumeSound (); 
       break; 
       
-    case BTS_SAVEGAME: 
+    case INT(ButtonCodeType::BTS_SAVEGAME): 
       if (!savedescription[0]) 
    strcpy (savedescription, "NET GAME"); 
       savegameslot =  
-   (players[i].cmd.buttons & BTS_SAVEMASK)>>BTS_SAVESHIFT; 
-      gameaction = ga_savegame; 
+   (players[i].cmd.buttons & INT(ButtonCodeType::BTS_SAVEMASK))>>INT(ButtonCodeType::BTS_SAVESHIFT); 
+      gameaction = GameActionType::ga_savegame; 
       break; 
   } 
      } 
@@ -928,7 +930,7 @@ void G_DoReborn (int playernum)
     if (!netgame)
     {
  // reload the level from scratch
- gameaction = ga_loadlevel;  
+ gameaction = GameActionType::ga_loadlevel;  
     }
     else 
     {
@@ -969,7 +971,7 @@ void G_DoReborn (int playernum)
  
 void G_ScreenShot () 
 { 
-    gameaction = ga_screenshot; 
+    gameaction = GameActionType::ga_screenshot; 
 } 
  
 
@@ -1002,7 +1004,7 @@ extern char* pagename;
 void G_ExitLevel () 
 { 
     secretexit = false; 
-    gameaction = ga_completed; 
+    gameaction = GameActionType::ga_completed; 
 } 
 
 // Here's for the german edition.
@@ -1014,14 +1016,14 @@ void G_SecretExitLevel ()
  secretexit = false;
     else
  secretexit = true; 
-    gameaction = ga_completed; 
+    gameaction = GameActionType::ga_completed; 
 } 
  
 void G_DoCompleted () 
 { 
     int             i; 
   
-    gameaction = ga_nothing; 
+    gameaction = GameActionType::ga_nothing; 
  
     for (i=0 ; i<MAXPLAYERS ; i++) 
  if (playeringame[i]) 
@@ -1034,7 +1036,7 @@ void G_DoCompleted ()
  switch(gamemap)
  {
    case 8:
-     gameaction = ga_victory;
+     gameaction = GameActionType::ga_victory;
      return;
    case 9: 
      for (i=0 ; i<MAXPLAYERS ; i++) 
@@ -1047,7 +1049,7 @@ void G_DoCompleted ()
   && (gamemode != GameMode::commercial) ) 
     {
  // victory 
- gameaction = ga_victory; 
+ gameaction = GameActionType::ga_victory; 
  return; 
     } 
   
@@ -1146,7 +1148,7 @@ void G_DoCompleted ()
 //
 void G_WorldDone () 
 { 
-    gameaction = ga_worlddone; 
+    gameaction = GameActionType::ga_worlddone; 
 
     if (secretexit) 
  players[consoleplayer].didsecret = true; 
@@ -1174,7 +1176,7 @@ void G_DoWorldDone ()
     gamestate = GameState::LEVEL; 
     gamemap = wminfo.next+1; 
     G_DoLoadLevel (); 
-    gameaction = ga_nothing; 
+    gameaction = GameActionType::ga_nothing; 
     viewactive = true; 
 } 
  
@@ -1192,7 +1194,7 @@ char savename[256];
 void G_LoadGame (char* name) 
 { 
     strcpy (savename, name); 
-    gameaction = ga_loadgame; 
+    gameaction = GameActionType::ga_loadgame; 
 } 
  
 #define VERSIONSIZE  16 
@@ -1205,7 +1207,7 @@ void G_DoLoadGame ()
     int  a,b,c; 
     char vcheck[VERSIONSIZE]; 
   
-    gameaction = ga_nothing; 
+    gameaction = GameActionType::ga_nothing; 
   
     length = M_ReadFile (savename, &savebuffer); 
     save_p = savebuffer + SAVESTRINGSIZE;
@@ -1310,7 +1312,7 @@ void G_DoSaveGame ()
     if (length > SAVEGAMESIZE) 
  I_Error ("Savegame buffer overrun"); 
     M_WriteFile (name, savebuffer, length); 
-    gameaction = ga_nothing; 
+    gameaction = GameActionType::ga_nothing; 
     savedescription[0] = 0;   
   
     players[consoleplayer].message = GGSAVED; 
@@ -1338,7 +1340,7 @@ G_DeferedInitNew
     d_skill = skill; 
     d_episode = episode; 
     d_map = map; 
-    gameaction = ga_newgame; 
+    gameaction = GameActionType::ga_newgame; 
 } 
 
 
@@ -1354,7 +1356,7 @@ void G_DoNewGame ()
     nomonsters = false;
     consoleplayer = 0;
     G_InitNew (d_skill, d_episode, d_map); 
-    gameaction = ga_nothing; 
+    gameaction = GameActionType::ga_nothing; 
 } 
 
 // The sky texture to be used instead of the F_SKY1 dummy.
@@ -1576,7 +1578,7 @@ char* defdemoname;
 void G_DeferedPlayDemo (char* name) 
 { 
     defdemoname = name; 
-    gameaction = ga_playdemo; 
+    gameaction = GameActionType::ga_playdemo; 
 } 
  
 void G_DoPlayDemo () 
@@ -1584,12 +1586,12 @@ void G_DoPlayDemo ()
     Skill skill; 
     int             i, episode, map; 
   
-    gameaction = ga_nothing; 
+    gameaction = GameActionType::ga_nothing; 
     demobuffer = demo_p = (byte*)W_CacheLumpName (defdemoname, PU_STATIC); 
     if ( *demo_p++ != VERSION)
     {
       fprintf( stderr, "Demo is from a different game version!\n");
-      gameaction = ga_nothing;
+      gameaction = GameActionType::ga_nothing;
       return;
     }
     
@@ -1630,7 +1632,7 @@ void G_TimeDemo (char* name)
     singletics = true; 
 
     defdemoname = name; 
-    gameaction = ga_playdemo; 
+    gameaction = GameActionType::ga_playdemo; 
 } 
  
  

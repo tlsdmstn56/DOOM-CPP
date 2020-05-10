@@ -25,7 +25,7 @@
 #ifndef __D_MAIN__
 #define __D_MAIN__
 
-#include "d_event.h"
+#include "event.h"
 
 #ifdef __GNUG__
 #pragma interface
@@ -48,8 +48,7 @@ void D_AddFile (char *file);
 //
 void D_DoomMain ();
 
-// Called by IO functions when input is detected.
-void D_PostEvent (event_t* ev);
+
 
 	
 

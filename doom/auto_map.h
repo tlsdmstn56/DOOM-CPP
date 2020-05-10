@@ -23,7 +23,7 @@
 
 #include "p_local.h"
 #include "m_cheat.h"
-#include "d_event.h"
+#include "event.h"
 
 // Used by ST StatusBar stuff.
 #define MSGHEADER (('a' << 24) + ('m' << 16))
@@ -42,7 +42,7 @@ class AutoMap
 
 public:
     // Called by main loop.
-    bool Responder(event_t *ev);
+    bool Responder(Event *ev);
 
     // Called by main loop.
     void Ticker();
@@ -197,7 +197,7 @@ private:
     cheatseq_t cheat_amap = {cheat_amap_seq, 0};
 
     bool stopped = true;
-    event_t st_notify;
+    Event st_notify;
 private:
     void getIslope(MLine *ml, ISlope *is) const noexcept;
     void activateNewScale() noexcept;

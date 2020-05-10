@@ -25,7 +25,7 @@
 #define __STSTUFF_H__
 
 #include "doomtype.h"
-#include "d_event.h"
+#include "event.h"
 
 // Size of statusbar.
 // Now sensitive for scaling.
@@ -39,7 +39,7 @@
 //
 
 // Called by main loop.
-bool ST_Responder (event_t* ev);
+bool ST_Responder (Event* ev);
 
 // Called by main loop.
 void ST_Ticker ();
@@ -74,7 +74,7 @@ typedef enum
 } st_chatstateenum_t;
 
 
-bool ST_Responder(event_t* ev);
+bool ST_Responder(Event* ev);
 
 
 

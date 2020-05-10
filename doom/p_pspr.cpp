@@ -26,7 +26,7 @@ static const char
     rcsid[] = "$Id: p_pspr.c,v 1.5 1997/02/03 22:45:12 b1 Exp $";
 
 #include "doomdef.h"
-#include "d_event.h"
+#include "event.h"
 
 #include "m_random.h"
 #include "p_local.h"
@@ -285,7 +285,7 @@ extern "C" void A_WeaponReady(player_t *player,
 
     // check for fire
     //  the missile launcher and bfg do not auto fire
-    if (player->cmd.buttons & BT_ATTACK)
+    if (player->cmd.buttons & INT(ButtonCodeType::BT_ATTACK))
     {
         if (!player->attackdown || (player->readyweapon != WeaponType::wp_missile && player->readyweapon != WeaponType::wp_bfg))
         {
@@ -315,7 +315,7 @@ extern "C" void A_ReFire(player_t *player,
 
     // check for fire
     //  (if a weaponchange is pending, let it go through instead)
-    if ((player->cmd.buttons & BT_ATTACK) && player->pendingweapon == WeaponType::wp_nochange && player->health)
+    if ((player->cmd.buttons & INT(ButtonCodeType::BT_ATTACK)) && player->pendingweapon == WeaponType::wp_nochange && player->health)
     {
         player->refire++;
         P_FireWeapon(player);

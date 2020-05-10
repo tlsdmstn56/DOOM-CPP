@@ -33,6 +33,7 @@
 #include "g_game.h"
 #include "doomdef.h"
 #include "doomstat.h"
+#include "event_manager.h"
 
 #define	NCMD_EXIT		0x80000000
 #define	NCMD_RETRANSMIT		0x40000000
@@ -74,8 +75,6 @@ int		skiptics;
 int		ticdup;		
 int		maxsend;	// BACKUPTICS/(2*ticdup)-1
 
-
-void D_ProcessEvents (); 
 void G_BuildTiccmd (ticcmd_t *cmd); 
 void D_DoAdvanceDemo ();
  
@@ -400,7 +399,7 @@ void NetUpdate ()
     for (i=0 ; i<newtics ; i++)
     {
 	I_StartTic ();
-	D_ProcessEvents ();
+	EventManager::instance().ProcessEvents ();
 	if (maketic - gameticdiv >= BACKUPTICS/2-1)
 	    break;          // can't hold any more
 	
@@ -446,30 +445,6 @@ void NetUpdate ()
 }
 
 
-
-//
-// CheckAbort
-//
-void CheckAbort ()
-{
-    event_t *ev;
-    int		stoptic;
-	
-    stoptic = I_GetTime () + 2; 
-    while (I_GetTime() < stoptic) 
-	I_StartTic (); 
-	
-    I_StartTic ();
-    for ( ; eventtail != eventhead 
-	      ; eventtail = (++eventtail)&(MAXEVENTS-1) ) 
-    { 
-	ev = &events[eventtail]; 
-	if (ev->type == EventType::KeyDown && ev->data1 == KEY_ESCAPE)
-	    I_Error ("Network game synchronization aborted.");
-    } 
-}
-
-
 //
 // D_ArbitrateNetStart
 //
@@ -487,7 +462,7 @@ void D_ArbitrateNetStart ()
 	printf ("listening for network start info...\n");
 	while (1)
 	{
-	    CheckAbort ();
+	    EventManager::instance().CheckAbort();
 	    if (!HGetPacket ())
 		continue;
 	    if (netbuffer->checksum & NCMD_SETUP)
@@ -510,7 +485,7 @@ void D_ArbitrateNetStart ()
 	printf ("sending network start info...\n");
 	do
 	{
-	    CheckAbort ();
+	    EventManager::instance().CheckAbort();
 	    for (i=0 ; i<doomcom->numnodes ; i++)
 	    {
 		netbuffer->retransmitfrom = static_cast<byte>(startskill);
@@ -757,7 +732,7 @@ void TryRunTics ()
 		{
 		    cmd = &netcmds[j][buf];
 		    cmd->chatchar = 0;
-		    if (cmd->buttons & BT_SPECIAL)
+		    if (cmd->buttons & INT(ButtonCodeType::BT_SPECIAL))
 			cmd->buttons = 0;
 		}
 	    }

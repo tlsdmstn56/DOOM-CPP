@@ -56,6 +56,7 @@ int XShmGetEventBase( Display* dpy ); // problems with g++?
 #include "d_main.h"
 
 #include "doomdef.h"
+#include "event_manager.h"
 
 #define POINTER_WARP_COUNTDOWN	1
 
@@ -194,7 +195,7 @@ bool		shmFinished;
 void I_GetEvent()
 {
 
-    event_t event;
+    Event event;
 
     // put event-grabbing stuff in here
     XNextEvent(X_display, &X_event);
@@ -203,13 +204,13 @@ void I_GetEvent()
       case KeyPress:
 	event.type = EventType::KeyDown;
 	event.data1 = xlatekey();
-	D_PostEvent(&event);
+	EventManager::instance().PostEvent(&event);
 	// fprintf(stderr, "k");
 	break;
       case KeyRelease:
 	event.type = EventType::KeyUp;
 	event.data1 = xlatekey();
-	D_PostEvent(&event);
+	EventManager::instance().PostEvent(&event);
 	// fprintf(stderr, "ku");
 	break;
       case ButtonPress:
@@ -222,7 +223,7 @@ void I_GetEvent()
 	    | (X_event.xbutton.button == Button2 ? 2 : 0)
 	    | (X_event.xbutton.button == Button3 ? 4 : 0);
 	event.data2 = event.data3 = 0;
-	D_PostEvent(&event);
+	EventManager::instance().PostEvent(&event);
 	// fprintf(stderr, "b");
 	break;
       case ButtonRelease:
@@ -238,7 +239,7 @@ void I_GetEvent()
 	    ^ (X_event.xbutton.button == Button2 ? 2 : 0)
 	    ^ (X_event.xbutton.button == Button3 ? 4 : 0);
 	event.data2 = event.data3 = 0;
-	D_PostEvent(&event);
+	EventManager::instance().PostEvent(&event);
 	// fprintf(stderr, "bu");
 	break;
       case MotionNotify:
@@ -257,7 +258,7 @@ void I_GetEvent()
 	    if (X_event.xmotion.x != X_width/2 &&
 		X_event.xmotion.y != X_height/2)
 	    {
-		D_PostEvent(&event);
+		EventManager::instance().PostEvent(&event);
 		// fprintf(stderr, "m");
 		mousemoved = false;
 	    } else

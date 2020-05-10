@@ -60,7 +60,7 @@ slidename_t slideFrameNames[MAXSLIDEDOORS] =
 //
 // T_VerticalDoor
 //
-void T_VerticalDoor (vldoor_t* door)
+void T_VerticalDoor (VLDoor* door)
 {
     result_e res;
  
@@ -267,7 +267,7 @@ EV_DoDoor
 {
     int  secnum,rtn;
     sector_t* sec;
-    vldoor_t* door;
+    VLDoor* door;
  
     secnum = -1;
     rtn = 0;
@@ -281,7 +281,7 @@ EV_DoDoor
  
  // new door thinker
  rtn = 1;
- door = (vldoor_t*)Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
+ door = (VLDoor*)Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
  P_AddThinker (&door->thinker);
  sec->specialdata = door;
 
@@ -358,7 +358,7 @@ EV_VerticalDoor
     player_t* player;
     int  secnum;
     sector_t* sec;
-    vldoor_t* door;
+    VLDoor* door;
     int  side;
  
     side = 0; // only front sides can be used
@@ -415,7 +415,7 @@ EV_VerticalDoor
 
     if (sec->specialdata)
     {
- door = (vldoor_t*)sec->specialdata;
+ door = (VLDoor*)sec->specialdata;
  switch(line->special)
  {
    case 1: // ONLY FOR "RAISE" DOORS, NOT "OPEN"s
@@ -456,7 +456,7 @@ EV_VerticalDoor
  
     
     // new door thinker
-    door = (vldoor_t*)Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
+    door = (VLDoor*)Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
     P_AddThinker (&door->thinker);
     sec->specialdata = door;
     door->thinker.function.acp1 = (actionf_p1) T_VerticalDoor;
@@ -504,9 +504,9 @@ EV_VerticalDoor
 //
 void P_SpawnDoorCloseIn30 (sector_t* sec)
 {
-    vldoor_t* door;
+    VLDoor* door;
  
-    door = (vldoor_t*)Z_Malloc ( sizeof(*door), PU_LEVSPEC, 0);
+    door = (VLDoor*)Z_Malloc ( sizeof(*door), PU_LEVSPEC, 0);
 
     P_AddThinker (&door->thinker);
 
@@ -529,9 +529,9 @@ P_SpawnDoorRaiseIn5Mins
 ( sector_t* sec,
   int  secnum )
 {
-    vldoor_t* door;
+    VLDoor* door;
  
-    door = (vldoor_t*)Z_Malloc ( sizeof(*door), PU_LEVSPEC, 0);
+    door = (VLDoor*)Z_Malloc ( sizeof(*door), PU_LEVSPEC, 0);
     
     P_AddThinker (&door->thinker);
 
@@ -742,7 +742,7 @@ EV_SlidingDoor
     // Init sliding door vars
     if (!door)
     {
- door = (vldoor_t*)Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
+ door = (VLDoor*)Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
  P_AddThinker (&door->thinker);
  sec->specialdata = door;
   

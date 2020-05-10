@@ -89,7 +89,7 @@ char* finaleflat;
 
 void F_StartCast ();
 void F_CastTicker ();
-bool F_CastResponder (event_t *ev);
+bool F_CastResponder (Event *ev);
 void F_CastDrawer ();
 
 //
@@ -97,7 +97,7 @@ void F_CastDrawer ();
 //
 void F_StartFinale ()
 {
-    gameaction = ga_nothing;
+    gameaction = GameActionType::ga_nothing;
     gamestate = GameState::FINALE;
     viewactive = false;
     AutoMap::get().setAutoMapActive(false);
@@ -194,7 +194,7 @@ void F_StartFinale ()
 
 
 
-bool F_Responder (event_t *event)
+bool F_Responder (Event *event)
 {
     if (finalestage == 2)
  return F_CastResponder (event);
@@ -224,7 +224,7 @@ void F_Ticker ()
  if (gamemap == 30)
    F_StartCast ();
  else
-   gameaction = ga_worlddone;
+   gameaction = GameActionType::ga_worlddone;
       }
     }
     
@@ -501,7 +501,7 @@ void F_CastTicker ()
 // F_CastResponder
 //
 
-bool F_CastResponder (event_t* ev)
+bool F_CastResponder (Event* ev)
 {
     if (ev->type != EventType::KeyDown)
  return false;

@@ -290,7 +290,7 @@ constexpr const int KEY_LALT = KEY_RALT;
 //#include "tables.h"
 
 // Event type.
-//#include "d_event.h"
+//#include "event.h"
 
 // Game function, skills.
 //#include "g_game.h"

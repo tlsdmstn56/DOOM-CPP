@@ -44,7 +44,7 @@
 
 #include "auto_map.h"
 
-#include "d_event.h"
+#include "event.h"
 
 // For use if I do walls with outsides/insides
 constexpr const int REDS = (256 - 5 * 16);
@@ -294,7 +294,7 @@ void AutoMap::changeWindowLoc() noexcept
 void AutoMap::initVariables() noexcept
 {
     int pnum;
-    static event_t st_notify = {EventType::KeyUp, MSGENTERED};
+    static Event st_notify = {EventType::KeyUp, MSGENTERED};
 
     automapactive = true;
     fb = screens[0];
@@ -440,7 +440,7 @@ void AutoMap::maxOutWindowScale()
 //
 // Handle events (user inputs) in automap mode
 //
-bool AutoMap::Responder(event_t *ev)
+bool AutoMap::Responder(Event *ev)
 {
     int rc;
     static int cheatstate = 0;

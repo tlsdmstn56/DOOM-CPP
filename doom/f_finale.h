@@ -25,13 +25,13 @@
 
 
 #include "doomtype.h"
-#include "d_event.h"
+#include "event.h"
 //
 // FINALE
 //
 
 // Called by main loop.
-bool F_Responder (event_t* ev);
+bool F_Responder (Event* ev);
 
 // Called by main loop.
 void F_Ticker ();

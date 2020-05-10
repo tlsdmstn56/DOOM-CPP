@@ -24,7 +24,7 @@
 #define __I_SYSTEM__
 
 #include "d_ticcmd.h"
-#include "d_event.h"
+#include "event.h"
 
 #ifdef __GNUG__
 #pragma interface
@@ -51,7 +51,7 @@ int I_GetTime ();
 // (just after displaying a frame).
 // Time consuming syncronous operations
 // are performed here (joystick reading).
-// Can call D_PostEvent.
+// Can call EventManager::instance().PostEvent.
 //
 void I_StartFrame ();
 
@@ -60,7 +60,7 @@ void I_StartFrame ();
 // Called by D_DoomLoop,
 // called before processing each tic in a frame.
 // Quick syncronous operations are performed here.
-// Can call D_PostEvent.
+// Can call EventManager::instance().PostEvent.
 void I_StartTic ();
 
 // Asynchronous interrupt functions should maintain private queues
