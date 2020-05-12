@@ -24,13 +24,8 @@
 
 #include "doomdef.h"
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
-
 // Weapon info: sprite frames, ammunition use.
-typedef struct
+struct WeaponInfo
 {
     AmmoType	ammo;
     int		upstate;
@@ -38,13 +33,6 @@ typedef struct
     int		readystate;
     int		atkstate;
     int		flashstate;
+};
 
-} weaponinfo_t;
-
-extern  weaponinfo_t    weaponinfo[static_cast<int>(WeaponType::NUMWEAPONS)];
-
-//-----------------------------------------------------------------------------
-//
-// $Log:$
-//
-//-----------------------------------------------------------------------------
+extern  WeaponInfo weaponinfo[static_cast<int>(WeaponType::NUMWEAPONS)];

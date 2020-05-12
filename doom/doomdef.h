@@ -306,7 +306,7 @@ constexpr const int KEY_LALT = KEY_RALT;
 //struct player_s;
 
 
-//#include "d_items.h"
+//#include "items.h"
 //#include "d_player.h"
 //#include "p_mobj.h"
 //#include "d_net.h"
