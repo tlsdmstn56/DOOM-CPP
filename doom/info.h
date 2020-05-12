@@ -21,8 +21,7 @@
 //
 //-----------------------------------------------------------------------------
 
-#ifndef __INFO__
-#define __INFO__
+#pragma once
 
 // Needed for action function pointer handling.
 #include "d_think.h"
@@ -1332,5 +1331,3 @@ typedef struct
 } mobjinfo_t;
 
 extern mobjinfo_t mobjinfo[static_cast<int>(MObjType::NUMMOBJTYPES)];
-
-#endif

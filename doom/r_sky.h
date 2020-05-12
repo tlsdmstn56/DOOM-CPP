@@ -20,8 +20,7 @@
 //-----------------------------------------------------------------------------
 
 
-#ifndef __R_SKY__
-#define __R_SKY__
+#pragma once
 
 
 #ifdef __GNUG__
@@ -40,7 +39,6 @@ extern int  skytexturemid;
 // Called whenever the view size changes.
 void R_InitSkyMap ();
 
-#endif
 //-----------------------------------------------------------------------------
 //
 // $Log:$

@@ -25,8 +25,7 @@
 //-----------------------------------------------------------------------------
 
 
-#ifndef __D_STATE__
-#define __D_STATE__
+#pragma once
 
 // We need globally shared data structures,
 //  for defining the global state variables.
@@ -287,7 +286,6 @@ extern	int		ticdup;
 
 
 
-#endif
 //-----------------------------------------------------------------------------
 //
 // $Log:$

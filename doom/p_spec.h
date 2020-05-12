@@ -22,8 +22,7 @@
 //
 //-----------------------------------------------------------------------------
 
-#ifndef __P_SPEC__
-#define __P_SPEC__
+#pragma once
 
 //
 // End-level timer (-TIMER option)
@@ -523,7 +522,6 @@ int EV_Teleport(line_t *line,
                 int side,
                 mobj_t *thing);
 
-#endif
 //-----------------------------------------------------------------------------
 //
 // $Log:$

@@ -20,8 +20,7 @@
 //-----------------------------------------------------------------------------
 
 
-#ifndef __G_GAME__
-#define __G_GAME__
+#pragma once
 
 #include "doomdef.h"
 #include "event.h"
@@ -71,7 +70,6 @@ bool G_Responder (Event*	ev);
 void G_ScreenShot ();
 
 
-#endif
 //-----------------------------------------------------------------------------
 //
 // $Log:$

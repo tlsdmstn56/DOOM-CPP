@@ -22,8 +22,7 @@
 //-----------------------------------------------------------------------------
 
 
-#ifndef __D_MAIN__
-#define __D_MAIN__
+#pragma once
 
 #include "event.h"
 
@@ -60,4 +59,3 @@ void D_PageDrawer ();
 void D_AdvanceDemo ();
 void D_StartTitle ();
 
-#endif
