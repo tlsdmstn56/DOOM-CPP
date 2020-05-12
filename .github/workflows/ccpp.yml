@@ -1,9 +1,9 @@
 name: CI
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
+    branches: [ master ]
+  push:
     branches: [ master ]
 
 jobs:
@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: true
     - uses: lukka/get-cmake@latest
     - name: build
       run: mkdir build && cd build && cmake .. && make

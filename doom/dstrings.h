@@ -23,15 +23,13 @@
 //-----------------------------------------------------------------------------
 
 
-#ifndef __DSTRINGS__
-#define __DSTRINGS__
-
+#pragma once
 
 // All important printed strings.
 // Language selection (message strings).
 // Use -DFRENCH etc.
 
-#include "d_englsh.h"
+#include "text_eng.h"
 
 // Misc. other strings.
 #define SAVEGAMENAME	"doomsav"
@@ -52,11 +50,3 @@
 #define NUM_QUITMESSAGES   22
 
 extern const char* endmsg[];
-
-
-#endif
-//-----------------------------------------------------------------------------
-//
-// $Log:$
-//
-//-----------------------------------------------------------------------------

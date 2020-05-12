@@ -615,7 +615,7 @@ char HU_dequeueChatChar()
     return c;
 }
 
-bool HU_Responder(event_t *ev)
+bool HU_Responder(Event *ev)
 {
 
     static char  lastmessage[HU_MAXLINELENGTH+1];

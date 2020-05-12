@@ -29,7 +29,7 @@ rcsid[] = "$Id: p_user.c,v 1.3 1997/01/28 22:08:29 b1 Exp $";
 
 
 #include "doomdef.h"
-#include "d_event.h"
+#include "event.h"
 
 #include "p_local.h"
 
@@ -224,7 +224,7 @@ void P_DeathThink (player_t* player)
 	player->damagecount--;
 	
 
-    if (player->cmd.buttons & BT_USE)
+    if (player->cmd.buttons & INT(ButtonCodeType::BT_USE))
 	player->playerstate = PST_REBORN;
 }
 
@@ -277,15 +277,15 @@ void P_PlayerThink (player_t* player)
     // Check for weapon change.
 
     // A special event has no other buttons.
-    if (cmd->buttons & BT_SPECIAL)
+    if (cmd->buttons & INT(ButtonCodeType::BT_SPECIAL))
 	cmd->buttons = 0;			
 		
-    if (cmd->buttons & BT_CHANGE)
+    if (cmd->buttons & INT(ButtonCodeType::BT_CHANGE))
     {
 	// The actual changing of the weapon is done
 	//  when the weapon psprite can do it
 	//  (read: not in the middle of an attack).
-	newweapon = (WeaponType)((cmd->buttons&BT_WEAPONMASK)>>BT_WEAPONSHIFT);
+	newweapon = (WeaponType)((cmd->buttons&INT(ButtonCodeType::BT_WEAPONMASK))>>INT(ButtonCodeType::BT_WEAPONSHIFT));
 	
 	if (newweapon == WeaponType::wp_fist
 	    && player->weaponowned[static_cast<int>(WeaponType::wp_chainsaw)]
@@ -319,7 +319,7 @@ void P_PlayerThink (player_t* player)
     }
     
     // check for use
-    if (cmd->buttons & BT_USE)
+    if (cmd->buttons & INT(ButtonCodeType::BT_USE))
     {
 	if (!player->usedown)
 	{

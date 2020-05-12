@@ -20,15 +20,14 @@
 //-----------------------------------------------------------------------------
 
 
-#ifndef __D_PLAYER__
-#define __D_PLAYER__
+#pragma once
 
 
 // The player data structure depends on a number
 // of other structs: items (internal inventory),
 // animation states (closely tied to the sprites
 // used to represent them, unfortunately).
-#include "d_items.h"
+#include "items.h"
 #include "p_pspr.h"
 
 // In addition, the player is just a special
@@ -211,7 +210,6 @@ typedef struct
 } wbstartstruct_t;
 
 
-#endif
 //-----------------------------------------------------------------------------
 //
 // $Log:$

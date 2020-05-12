@@ -411,7 +411,7 @@ void WI_slamBackground()
 
 // The ticker is used to detect keys
 //  because of timing issues in netgames.
-bool WI_Responder(event_t* ev)
+bool WI_Responder(Event* ev)
 {
     return false;
 }
@@ -1475,7 +1475,7 @@ void WI_checkForAccelerate()
     {
 	if (playeringame[i])
 	{
-	    if (player->cmd.buttons & BT_ATTACK)
+	    if (player->cmd.buttons & INT(ButtonCodeType::BT_ATTACK))
 	    {
 		if (!player->attackdown)
 		    acceleratestage = 1;
@@ -1483,7 +1483,7 @@ void WI_checkForAccelerate()
 	    }
 	    else
 		player->attackdown = false;
-	    if (player->cmd.buttons & BT_USE)
+	    if (player->cmd.buttons & INT(ButtonCodeType::BT_USE))
 	    {
 		if (!player->usedown)
 		    acceleratestage = 1;

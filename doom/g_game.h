@@ -20,11 +20,10 @@
 //-----------------------------------------------------------------------------
 
 
-#ifndef __G_GAME__
-#define __G_GAME__
+#pragma once
 
 #include "doomdef.h"
-#include "d_event.h"
+#include "event.h"
 
 
 
@@ -66,12 +65,11 @@ void G_SecretExitLevel ();
 void G_WorldDone ();
 
 void G_Ticker ();
-bool G_Responder (event_t*	ev);
+bool G_Responder (Event*	ev);
 
 void G_ScreenShot ();
 
 
-#endif
 //-----------------------------------------------------------------------------
 //
 // $Log:$

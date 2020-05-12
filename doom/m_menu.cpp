@@ -1347,7 +1347,7 @@ M_WriteText
 //
 // M_Responder
 //
-bool M_Responder (event_t* ev)
+bool M_Responder (Event* ev)
 {
     int             ch;
     int             i;

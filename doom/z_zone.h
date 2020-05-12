@@ -24,8 +24,7 @@
 
 
 
-#ifndef __Z_ZONE__
-#define __Z_ZONE__
+#pragma once
 
 #include <stdio.h>
 
@@ -78,7 +77,6 @@ typedef struct memblock_s
 
 
 
-#endif
 //-----------------------------------------------------------------------------
 //
 // $Log:$

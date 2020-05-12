@@ -347,7 +347,7 @@ enum
 // Things to handle:
 //
 // T_MoveCeiling, (ceiling_t: sector_t * swizzle), - active list
-// T_VerticalDoor, (vldoor_t: sector_t * swizzle),
+// T_VerticalDoor, (VLDoor: sector_t * swizzle),
 // T_MoveFloor, (floormove_t: sector_t * swizzle),
 // T_LightFlash, (lightflash_t: sector_t * swizzle),
 // T_StrobeFlash, (strobe_t: sector_t *),
@@ -358,7 +358,7 @@ void P_ArchiveSpecials ()
 {
     thinker_t*		th;
     ceiling_t*		ceiling;
-    vldoor_t*		door;
+    VLDoor*		door;
     floormove_t*	floor;
     plat_t*		plat;
     lightflash_t*	flash;
@@ -402,7 +402,7 @@ void P_ArchiveSpecials ()
 	{
 	    *save_p++ = tc_door;
 	    PADSAVEP();
-	    door = (vldoor_t *)save_p;
+	    door = (VLDoor *)save_p;
 	    memcpy (door, th, sizeof(*door));
 	    save_p += sizeof(*door);
 	    door->sector = (sector_t *)(door->sector - sectors);
@@ -478,7 +478,7 @@ void P_UnArchiveSpecials ()
 {
     byte		tclass;
     ceiling_t*		ceiling;
-    vldoor_t*		door;
+    VLDoor*		door;
     floormove_t*	floor;
     plat_t*		plat;
     lightflash_t*	flash;
@@ -512,7 +512,7 @@ void P_UnArchiveSpecials ()
 				
 	  case tc_door:
 	    PADSAVEP();
-	    door = (vldoor_t*)Z_Malloc (sizeof(*door), PU_LEVEL, NULL);
+	    door = (VLDoor*)Z_Malloc (sizeof(*door), PU_LEVEL, NULL);
 	    memcpy (door, save_p, sizeof(*door));
 	    save_p += sizeof(*door);
 	    door->sector = &sectors[(int64_t)door->sector];

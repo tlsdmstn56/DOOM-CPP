@@ -20,9 +20,7 @@
 //
 //-----------------------------------------------------------------------------
 
-#ifndef __D_ENGLSH__
-#define __D_ENGLSH__
-
+#pragma once
 //
 //	Printed strings for translation
 //
@@ -691,11 +689,3 @@ constexpr char * CC_ARCH = "ARCH-VILE";
 constexpr char * CC_SPIDER = "THE SPIDER MASTERMIND";
 constexpr char * CC_CYBER = "THE CYBERDEMON";
 constexpr char * CC_HERO = "OUR HERO";
-
-
-#endif
-//-----------------------------------------------------------------------------
-//
-// $Log:$
-//
-//-----------------------------------------------------------------------------
